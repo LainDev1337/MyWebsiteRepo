@@ -1,1 +1,0 @@
-powershell -ExecutionPolicy Bypass -File C:\Users\serge\MyWebsiteRepo\sync-to-s3.ps1
