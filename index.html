@@ -10,66 +10,90 @@
       color: lime;
       font-family: monospace;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
       overflow: hidden;
-      flex-direction: column;
+    }
+    .donut-container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      height: 100vh;
     }
     pre {
-      font-size: 12px;
-      line-height: 10px;
-    }
-    a {
+      font-size: 22px;
+      line-height: 16px;
+      z-index: 1;
+      pointer-events: none;
+      background: transparent;
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      margin: 0;
+    }
+    a {
       color: white;
       text-decoration: none;
-      font-size: 24px;
-      background: rgba(0,0,0,0.7);
-      padding: 10px 20px;
-      border: 2px solid white;
-      border-radius: 8px;
+      font-size: 28px;
+      font-family: monospace;
+      background: none;
+      border: none;
+      border-radius: 0;
+      padding: 16px 36px;
+      transition: color 0.2s, background 0.2s;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      white-space: nowrap;
     }
     a:hover {
-      background: white;
-      color: black;
+      color: lime;
+      background: none;
     }
   </style>
 </head>
 <body>
-  <pre id="donut"></pre>
-  <a href="resume.html">myCV</a>
+  <div class="donut-container">
+    <pre id="donut"></pre>
+    <a href="resume.html">myCV</a>
+  </div>
   <script>
     const pre = document.getElementById('donut');
     let A = 1, B = 1;
 
     const render = () => {
       let b = [], z = [];
-      const width = 60, height = 22;
+      // Увеличиваем размеры для большого бублика
+      const width = 100, height = 38;
 
       for (let k = 0; k < width * height; k++) {
         b[k] = k % width === width - 1 ? '\n' : ' ';
         z[k] = 0;
       }
 
-      for (let j = 0; j < 6.28; j += 0.07) {
-        for (let i = 0; i < 6.28; i += 0.02) {
+      // Увеличиваем внутренний диаметр (значительно увеличиваем число в знаменателе D)
+      for (let j = 0; j < 6.28; j += 0.045) {
+        for (let i = 0; i < 6.28; i += 0.012) {
           const c = Math.sin(i),
                 d = Math.cos(j),
                 e = Math.sin(A),
                 f = Math.sin(j),
                 g = Math.cos(A),
-                h = d + 2,
-                D = 1 / (c * h * e + f * g + 5),
+                h = d + 3.2, // чуть больше внешний радиус
+                D = 1 / (c * h * e + f * g + 18), // намного больше внутренний радиус
                 l = Math.cos(i),
                 m = Math.cos(B),
                 n = Math.sin(B),
                 t = c * h * g - f * e;
-          const x = 0 | (width / 2 + 30 * D * (l * h * m - t * n)),
-                y = 0 | (height / 2 + 15 * D * (l * h * n + t * m)),
+          const x = 0 | (width / 2 + 48 * D * (l * h * m - t * n)),
+                y = 0 | (height / 2 + 24 * D * (l * h * n + t * m)),
                 o = x + width * y,
                 N = 0 | (8 * ((f * e - c * d * g) * m - c * d * e - f * g - l * d * n));
           if (height > y && y > 0 && x > 0 && width > x && D > z[o]) {
